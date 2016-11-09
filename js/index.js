@@ -492,9 +492,8 @@ if(!localStorage.musics){
 		bg.attr("src",musics[now].img);
 		imgs.css("background-image","url("+musics[now].img+")");
 		kk.attr("src",musics[now].img)
-		console.log(now)
 		$(".lyric2").empty();
-		$(".lyric2").css("top","3.4rem")
+		$(".lyric2").css("top","3.4rem");
 		lyric_ctrl();
 		num=0
 		
@@ -555,5 +554,7 @@ if(!localStorage.musics){
 			next();
 			return false;
 		}
+		$(".lyric2").empty();
+		$(".lyric2").css("top","3.4rem")
 	})
 })
