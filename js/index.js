@@ -25,7 +25,7 @@ $(function(){
 	var block=$(".block");
 	var bstart;	//开始位置
 	var return1=$("#return");
-	
+	var anzhu=false;
 	var model=$(".round")
 	var musics=[{
 		name:"七里香",
@@ -130,6 +130,7 @@ if(!localStorage.musics){
 	pi.on("touchstart",function(e){							//进度条拖进
 		ox=e.originalEvent.changedTouches[0].clientX-pi.offset().left;
 		var start=pi.width()/2-ox;
+		anzhu=true;
 		$(document).on("touchmove",function(e){
 			var left1=e.originalEvent.changedTouches[0].clientX-process.offset().left+start;
 				if(left1>=process.width()||left1<=0){
@@ -142,6 +143,7 @@ if(!localStorage.musics){
 	})
 	pi.on("touchend",function(){
 		console.log(1)
+		anzhu=false;
 		$(document).off("touchmove")
 		return false;
 	})
@@ -480,7 +482,17 @@ if(!localStorage.musics){
 			}
 		}
 	}
-
+	function play3(obj){
+		var lyrict1="lyric"+(Math.floor(audio.currentTime)+2);
+		var p1=$(".lyric2 p")
+		for(var i=0;i<p1.length;i++){
+			if(lyrict1>=p1.eq(i).attr("id")){
+				p1.css("color","#a7a1a1")
+				p1.eq(i).css("color","#fff");
+				$(".lyric2").css({"top":-i*1.2+3.4+"rem"})
+			}
+		}
+	}
 	
 	///////////////////////////////////		audio所有自带事件
 	
@@ -496,7 +508,6 @@ if(!localStorage.musics){
 		$(".lyric2").css("top","3.4rem");
 		lyric_ctrl();
 		num=0
-		
 	})
 	
 	$(audio).on("process",function(){
@@ -529,7 +540,12 @@ if(!localStorage.musics){
 		pi.css("left",process.width()*audio.currentTime/audio.duration-pi.width()/2);
 		process1.css("width",process.width()*audio.currentTime/audio.duration);
 		start.html(time(audio.currentTime));
-		play2();
+		if(anzhu){
+			play3()
+		}else{
+			play2();
+		}
+		
 		num++;
 	})
 	
